@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Text } from 'react-native';
 
-export default class Question extends Component<Props> {
+export default class QuestionComponent extends Component<Props> {
   constructor() {
     super();
     this.state = {}

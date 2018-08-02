@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Button, Alert, Text} from 'react-native';
 
-import Question from './App/Components/Question';
-import Answers from './App/Components/Answers';
+import QuestionComponent from './App/Components/QuestionComponent';
+import AnswersComponent from './App/Components/AnswersComponent';
+import ScoreComponent from './App/Components/ScoreComponent';
 
 export default class App extends Component<Props> {
 
@@ -15,14 +16,17 @@ export default class App extends Component<Props> {
       questions: '',
       triviaOn: false,
       finished: false,
+      correctAnswers: 0,
+      incorrectAnswers: 0,
     };
     this.fetchQuestion = this.fetchQuestion.bind(this);
     this.updateQuestion = this.updateQuestion.bind(this);
     this.restartGame = this.restartGame.bind(this);
     this.startPage = this.startPage.bind(this);
+    this.updateAnswers = this.updateAnswers.bind(this);
   }
 
-  fetchQuestion() {
+  fetchQuestion = () => {
     fetch(`https://opentdb.com/api.php?amount=${this.state.amount}`)
       .then((response) => response.json()
       .then((json) => {
@@ -35,9 +39,15 @@ export default class App extends Component<Props> {
     );
   }
 
-  updateQuestion() {
+  updateAnswers = (answers) => {
+    this.setState({
+      correctAnswers: answers.correctAnswers,
+      incorrectAnswers: answers.incorrectAnswers,
+    })
+
+  }
+  updateQuestion = () => {
     if(this.state.question < this.state.amount - 1) {
-      console.log(this.state.question);
       this.setState({
         question: this.state.question + 1,
         currentQuestion: this.state.questions[this.state.question + 1],
@@ -48,7 +58,8 @@ export default class App extends Component<Props> {
       });
     }
   }
-  restartGame() {
+
+  restartGame = () => {
     this.setState({
       amount: 10,
       question: 0,
@@ -59,7 +70,8 @@ export default class App extends Component<Props> {
     });
     this.fetchQuestion();
   }
-  startPage() {
+
+  startPage = () => {
     this.setState({
       amount: 10,
       question: 0,
@@ -69,11 +81,12 @@ export default class App extends Component<Props> {
       finished: false,
     });
   }
+
   render() {
     if (!this.state.triviaOn) {
       return (
           <View style={styles.container}>
-            <Button title='Click' onPress={this.fetchQuestion} />
+            <Button title='Start Game' onPress={this.fetchQuestion} />
           </View>
       )
     }
@@ -81,6 +94,7 @@ export default class App extends Component<Props> {
       return (
         <View style={styles.container}>
           <Text>The game is finished</Text>
+          <ScoreComponent totalScore={this.state.correctAnswers}/>
           <Button title="Restart" onPress={this.restartGame } />
           <Button title="Return to Start Page" onPress={this.startPage} />
         </View>
@@ -88,15 +102,13 @@ export default class App extends Component<Props> {
     }
     return (
       <View style={styles.container}>
-
-
-        <Question currentQuestion={this.state.currentQuestion.question} />
-        <Answers
+        <QuestionComponent currentQuestion={this.state.currentQuestion.question} />
+        <AnswersComponent
           incorrectAnswers={this.state.currentQuestion.incorrect_answers}
           correctAnswer={this.state.currentQuestion.correct_answer}
           nextQuestion={this.updateQuestion}
+          totalAnswers={this.updateAnswers}
         />
-        <Text>{this.state.question}</Text>
       </View>
     );
   }

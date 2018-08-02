@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import { Alert, Button, View, Text } from 'react-native';
 
-export default class Answers extends Component<Props> {
+export default class AnswersComponent extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      correctAnswers: 0,
-      incorrectAnswers: 0,
+      answers: {
+        correctAnswers: 0,
+        incorrectAnswers: 0,
+      }
     };
 
     this.checkAnswer = this.checkAnswer.bind(this);
@@ -23,13 +25,23 @@ export default class Answers extends Component<Props> {
   }
 
   checkAnswer(selectedAnswer) {
-    console.log(this.props.correctAnswer);
-    console.log(selectedAnswer);
     if(selectedAnswer == this.props.correctAnswer) {
-      return this.props.nextQuestion;
+      this.setState({
+        answers: {
+          correctAnswers: this.state.answers.correctAnswers + 1,
+          incorrectAnswers: this.state.answers.incorrectAnswers,
+        }
+      });
     } else {
-
+      this.setState({
+        answers: {
+          correctAnswers: this.state.answers.correctAnswers,
+          incorrectAnswers: this.state.answers.incorrectAnswers + 1,
+        }
+      });
     }
+    this.props.nextQuestion();
+    this.props.totalAnswers(this.state.answers)
   }
 
   shuffle(array) {
@@ -48,12 +60,10 @@ export default class Answers extends Component<Props> {
                 <Button
                   title={answer}
                   key={key}
-                  onPress={() => this.checkAnswer(answer), this.props.nextQuestion } />
+                  onPress={() => this.checkAnswer(answer) } />
               );
             })
           }
-          <Text>Correct answers: {this.state.correctAnswers}</Text>
-          <Text>Incorrect answers: {this.state.incorrectAnswers}</Text>
         </View>
     )
   }
