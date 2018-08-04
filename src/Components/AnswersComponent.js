@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Alert, Button, View, Text, TouchableHighlight } from 'react-native';
+var entities = require("entities");
 
 import styles from '../Styles/styles';
 
@@ -59,13 +60,14 @@ export default class AnswersComponent extends Component<Props> {
       <View style={styles.answersContainer}>
         {
           this.answers().map((answer, key) => {
+            let decodedAnswer = entities.decodeHTML(answer);
             return (
               <TouchableHighlight
                 key={key}
                 style={styles.answerSelectButton}
                 onPress={() => this.checkAnswer(answer) }
               >
-                <Text style={styles.textStyle}>{answer}</Text>
+                <Text style={styles.textStyle}>{decodedAnswer}</Text>
               </TouchableHighlight>
             );
           })

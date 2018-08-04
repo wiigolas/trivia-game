@@ -30,7 +30,6 @@ export default class App extends Component<Props> {
   }
 
   fetchQuestions = (category, difficulty) => {
-    console.log(category, difficulty)
     fetch(`https://opentdb.com/api.php?amount=${this.state.amount}&category=${category.categoryId}&difficulty=${difficulty}`)
       .then((response) => response.json()
       .then((json) => {
