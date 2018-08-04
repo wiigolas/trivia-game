@@ -1,30 +1,38 @@
 import React, { Component } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 
-export default class StartPageComponent extends Component<Props> {
+export default class DifficultyMenyComponent extends Component<Props> {
 
   constructor() {
     super();
     this.state = {
-      categories: [
-        '9', // 'General Knowledge'
-        '15', // 'Video Games'
-        '21', // 'Sport'
-        '27', // 'Animals'
-
+      difficulties: [
+        {
+          difficultyCategory: 'easy',
+          difficultyName: 'Easy',
+        },
+        {
+          difficultyCategory: 'medium',
+          difficultyName: 'Medium',
+        },
+        {
+          difficultyCategory: 'hard',
+          difficultyName: 'Hard',
+        },
       ],
-    }
+    };
   }
+
   render() {
     return(
       <View style={styles.container}>
         {
-          this.state.categories.map((category, key) => {
+          this.state.difficulties.map((difficulty, key) => {
             return (
               <Button
-                title={category}
+                title={difficulty.difficultyName}
                 key={key}
-                onPress={() => this.props.selectCategory(category) } />
+                onPress={() => this.props.selectDifficulty(difficulty.difficultyCategory) } />
             );
           })
         }

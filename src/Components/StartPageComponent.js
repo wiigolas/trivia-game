@@ -1,23 +1,62 @@
 import React, { Component } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import { View, Button, StyleSheet, ActivityIndicator, } from 'react-native';
 
-import GameMenuComponent from './GameMenuComponent';
+import CategoryMenuComponent from './CategoryMenuComponent';
+import DifficultyMenyComponent from './DifficultyMenyComponent';
 
 export default class StartPageComponent extends Component<Props> {
+
   constructor() {
     super();
     this.state = {
-
     };
+
     this.selectCategory = this.selectCategory.bind(this);
+    this.selectDifficulty = this.selectDifficulty.bind(this);
   }
+
+  componentDidMount = () => {
+    this.setState({
+      category: true,
+      difficulty: false,
+      selectedCategory: '',
+    })
+  }
+
   selectCategory = (category) => {
-    this.props.fetchQuestions(category)
+    this.setState({
+      category: false,
+      difficulty: true,
+      selectedCategory: category,
+    });
   }
+
+  selectDifficulty = (difficulty) => {
+    this.setState({
+      difficulty: false,
+    });
+
+    this.props.fetchQuestions(this.state.selectedCategory, difficulty);
+  }
+
   render() {
+    if(!this.state.category && this.state.difficulty){
+      return(
+        <View style={styles.container}>
+          <DifficultyMenyComponent selectDifficulty={this.selectDifficulty}/>
+        </View>
+      )
+    };
+    if(this.state.category && !this.state.difficulty){
+      return(
+        <View style={styles.container}>
+          <CategoryMenuComponent selectCategory={this.selectCategory}/>
+        </View>
+      )
+    }
     return(
       <View style={styles.container}>
-        <GameMenuComponent selectCategory={this.selectCategory}/>
+        <ActivityIndicator />
       </View>
     )
   }

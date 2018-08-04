@@ -18,6 +18,8 @@ export default class App extends Component<Props> {
       finished: false,
       correctAnswers: 0,
       incorrectAnswers: 0,
+      currentCategory: '',
+      currentDifficulty: '',
     };
     this.fetchQuestions = this.fetchQuestions.bind(this);
     this.updateQuestion = this.updateQuestion.bind(this);
@@ -26,16 +28,16 @@ export default class App extends Component<Props> {
     this.updateAnswers = this.updateAnswers.bind(this);
   }
 
-  fetchQuestions = (category) => {
-    console.log(category);
-    fetch(`https://opentdb.com/api.php?amount=${this.state.amount}&category=${category}`)
+  fetchQuestions = (category, difficulty) => {
+    fetch(`https://opentdb.com/api.php?amount=${this.state.amount}&category=${category}&difficulty=${difficulty}`)
       .then((response) => response.json()
       .then((json) => {
-         console.log(response);
         this.setState({
           questions: json.results,
           currentQuestion: json.results[0],
           triviaOn: true,
+          currentCategory: category,
+          currentDifficulty: difficulty,
         })
       })
     );
@@ -70,7 +72,7 @@ export default class App extends Component<Props> {
       triviaOn: true,
       finished: false,
     });
-    this.fetchQuestion();
+    this.fetchQuestions(this.state.currentCategory, this.state.currentDifficulty);
   }
 
   startPage = () => {
@@ -81,6 +83,8 @@ export default class App extends Component<Props> {
       questions: '',
       triviaOn: false,
       finished: false,
+      currentCategory: '',
+      currentDifficulty: '',
     });
   }
 
