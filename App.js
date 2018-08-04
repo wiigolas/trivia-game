@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Button, Alert, Text} from 'react-native';
+import {StyleSheet, View, Button, Alert, Text } from 'react-native';
 
 import StartPageComponent from './src/Components/StartPageComponent';
 import FinishedGameComponent from './src/Components/FinishedGameComponent';
 import GameComponent from './src/Components/GameComponent';
+import styles from './src/Styles/styles';
 
 export default class App extends Component<Props> {
 
@@ -29,7 +30,8 @@ export default class App extends Component<Props> {
   }
 
   fetchQuestions = (category, difficulty) => {
-    fetch(`https://opentdb.com/api.php?amount=${this.state.amount}&category=${category}&difficulty=${difficulty}`)
+    console.log(category, difficulty)
+    fetch(`https://opentdb.com/api.php?amount=${this.state.amount}&category=${category.categoryId}&difficulty=${difficulty}`)
       .then((response) => response.json()
       .then((json) => {
         this.setState({
@@ -91,45 +93,33 @@ export default class App extends Component<Props> {
   render() {
     if (!this.state.triviaOn) {
       return (
+        <View style={styles.container}>
           <StartPageComponent fetchQuestions={this.fetchQuestions}/>
+        </View>
       )
     }
     if(this.state.finished){
       return (
-        <FinishedGameComponent
-          correctAnswers={this.state.correctAnswers}
-          startPage={this.startPage}
-          restartGame={this.restartGame}
-        />
+        <View style={styles.container}>
+          <FinishedGameComponent
+            correctAnswers={this.state.correctAnswers}
+            startPage={this.startPage}
+            restartGame={this.restartGame}
+          />
+        </View>
       )
     }
     return (
-      <GameComponent
-        currentQuestion={this.state.currentQuestion.question}
-        incorrectAnswers={this.state.currentQuestion.incorrect_answers}
-        correctAnswer={this.state.currentQuestion.correct_answer}
-        nextQuestion={this.updateQuestion}
-        totalAnswers={this.updateAnswers}
-      />
+      <View style={styles.container}>
+        <GameComponent
+          currentQuestion={this.state.currentQuestion.question}
+          currentCategory={this.state.currentCategory.categoryName}
+          incorrectAnswers={this.state.currentQuestion.incorrect_answers}
+          correctAnswer={this.state.currentQuestion.correct_answer}
+          nextQuestion={this.updateQuestion}
+          totalAnswers={this.updateAnswers}
+        />
+      </View>
     );
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+};

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import { View, Button, StyleSheet, Text, TouchableHighlight, Dimensions } from 'react-native';
+import styles from '../Styles/styles';
 
 export default class CategoryMenuComponent extends Component<Props> {
 
@@ -16,8 +17,8 @@ export default class CategoryMenuComponent extends Component<Props> {
           categoryId: 15
         },
         {
-          categoryName: 'Sports',
-          categoryId: 21
+          categoryName: 'Computers',
+          categoryId: 18
         },
         {
           categoryName: 'Animals',
@@ -31,40 +32,24 @@ export default class CategoryMenuComponent extends Component<Props> {
       ],
     };
   }
-
   render() {
     return(
       <View style={styles.container}>
+        <Text style={styles.titleText}> Categories </Text>
         {
           this.state.categories.map((category, key) => {
             return (
-              <Button
-                title={category.categoryName}
+              <TouchableHighlight
                 key={key}
-                onPress={() => this.props.selectCategory(category.categoryId) } />
+                onPress={() => this.props.selectCategory(category) }
+                style={styles.menuSelectButton}
+              >
+                <Text style={styles.textStyle}>{category.categoryName}</Text>
+              </TouchableHighlight>
             );
           })
         }
       </View>
     )
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+};

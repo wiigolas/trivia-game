@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import styles from '../Styles/styles.js';
 
 export default class ScoreComponent extends Component<Props> {
   constructor() {
@@ -40,7 +41,7 @@ export default class ScoreComponent extends Component<Props> {
   render() {
     const totalScore = `You had ${this.props.totalScore} correct answers`;
     return(
-      <View>
+      <View style={styles.container}>
         <Text id='score'>{totalScore}</Text>
         <Text id='feedback'>{this.scoreFeedback(this.props.totalScore)}</Text>
       </View>

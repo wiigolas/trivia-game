@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import { Alert, Button, View, Text } from 'react-native';
+import { Alert, Button, View, Text, TouchableHighlight } from 'react-native';
+
+import styles from '../Styles/styles';
 
 export default class AnswersComponent extends Component<Props> {
   constructor(props) {
@@ -54,18 +56,21 @@ export default class AnswersComponent extends Component<Props> {
   }
   render(){
     return (
-        <View>
-          {
-            this.answers().map((answer, key) => {
-              return (
-                <Button
-                  title={answer}
-                  key={key}
-                  onPress={() => this.checkAnswer(answer) } />
-              );
-            })
-          }
-        </View>
+      <View style={styles.answersContainer}>
+        {
+          this.answers().map((answer, key) => {
+            return (
+              <TouchableHighlight
+                key={key}
+                style={styles.answerSelectButton}
+                onPress={() => this.checkAnswer(answer) }
+              >
+                <Text style={styles.textStyle}>{ answer }</Text>
+              </TouchableHighlight>
+            );
+          })
+        }
+      </View>
     )
   }
 }

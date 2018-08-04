@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+
+import styles from '../Styles/styles.js';
 
 export default class QuestionComponent extends Component<Props> {
   constructor() {
@@ -7,6 +9,15 @@ export default class QuestionComponent extends Component<Props> {
     this.state = {}
   }
   render(){
-    return <Text>{this.props.currentQuestion}</Text>
+    return (
+        <View style={styles.questionContainer}>
+          <Text style={styles.titleText}>
+            {this.props.currentCategory}
+          </Text>
+          <Text style={styles.questionTextContainer}>
+            {this.props.currentQuestion}
+          </Text>
+        </View>
+    )
   }
 }

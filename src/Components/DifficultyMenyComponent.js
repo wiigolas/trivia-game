@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import {
+  Text,
+  View,
+  Button,
+  Dimensions,
+  StyleSheet,
+  TouchableHighlight
+} from 'react-native';
+import styles from '../Styles/styles';
 
 export default class DifficultyMenyComponent extends Component<Props> {
 
@@ -26,13 +34,16 @@ export default class DifficultyMenyComponent extends Component<Props> {
   render() {
     return(
       <View style={styles.container}>
+      <Text style={styles.titleText}> Difficulty </Text>
         {
           this.state.difficulties.map((difficulty, key) => {
             return (
-              <Button
-                title={difficulty.difficultyName}
+              <TouchableHighlight
                 key={key}
-                onPress={() => this.props.selectDifficulty(difficulty.difficultyCategory) } />
+                style={styles.menuSelectButton}
+                onPress={() => this.props.selectDifficulty(difficulty.difficultyCategory) }>
+                <Text style={styles.textStyle}>{difficulty.difficultyName}</Text>
+              </TouchableHighlight>
             );
           })
         }
@@ -40,22 +51,3 @@ export default class DifficultyMenyComponent extends Component<Props> {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

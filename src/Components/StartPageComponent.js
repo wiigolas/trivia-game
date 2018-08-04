@@ -49,34 +49,19 @@ export default class StartPageComponent extends Component<Props> {
     };
     if(this.state.category && !this.state.difficulty){
       return(
-        <View style={styles.container}>
-          <CategoryMenuComponent selectCategory={this.selectCategory}/>
-        </View>
+        <CategoryMenuComponent selectCategory={this.selectCategory}/>
       )
     }
     return(
-      <View style={styles.container}>
-        <ActivityIndicator />
-      </View>
+      <ActivityIndicator style={styles.loading}/>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  loading: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
