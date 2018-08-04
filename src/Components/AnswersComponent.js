@@ -3,10 +3,6 @@ import { Alert, Button, View, Text, TouchableHighlight } from 'react-native';
 
 import styles from '../Styles/styles';
 
-const Entities = require('html-entities').XmlEntities;
-
-const entities = new Entities();
-
 export default class AnswersComponent extends Component<Props> {
   constructor(props) {
     super(props);

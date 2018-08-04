@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import { Text, View } from 'react-native';
-const Entities = require('html-entities').XmlEntities;
-
-const entities = new Entities();
+var entities = require("entities");
 
 import styles from '../Styles/styles.js';
 
@@ -13,7 +11,7 @@ export default class QuestionComponent extends Component<Props> {
   }
 
   render(){
-    let question = entities.decode(this.props.currentQuestion);
+    let question = entities.decodeHTML(this.props.currentQuestion);
     return (
         <View style={styles.questionContainer}>
           <Text style={styles.titleText}>
