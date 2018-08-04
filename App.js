@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Button, Alert, Text} from 'react-native';
 
-import QuestionComponent from './App/Components/QuestionComponent';
-import AnswersComponent from './App/Components/AnswersComponent';
-import ScoreComponent from './App/Components/ScoreComponent';
+import StartPageComponent from './src/Components/StartPageComponent';
+import FinishedGameComponent from './src/Components/FinishedGameComponent';
+import GameComponent from './src/Components/GameComponent';
 
 export default class App extends Component<Props> {
 
@@ -30,6 +30,7 @@ export default class App extends Component<Props> {
     fetch(`https://opentdb.com/api.php?amount=${this.state.amount}`)
       .then((response) => response.json()
       .then((json) => {
+         console.log(response);
         this.setState({
           questions: json.results,
           currentQuestion: json.results[0],
@@ -85,31 +86,26 @@ export default class App extends Component<Props> {
   render() {
     if (!this.state.triviaOn) {
       return (
-          <View style={styles.container}>
-            <Button title='Start Game' onPress={this.fetchQuestion} />
-          </View>
+          <StartPageComponent fetchQuestion={this.fetchQuestion}/>
       )
     }
     if(this.state.finished){
       return (
-        <View style={styles.container}>
-          <Text>The game is finished</Text>
-          <ScoreComponent totalScore={this.state.correctAnswers}/>
-          <Button title="Restart" onPress={this.restartGame } />
-          <Button title="Return to Start Page" onPress={this.startPage} />
-        </View>
+        <FinishedGameComponent
+          correctAnswers={this.state.correctAnswers}
+          startPage={this.startPage}
+          restartGame={this.restartGame}
+        />
       )
     }
     return (
-      <View style={styles.container}>
-        <QuestionComponent currentQuestion={this.state.currentQuestion.question} />
-        <AnswersComponent
-          incorrectAnswers={this.state.currentQuestion.incorrect_answers}
-          correctAnswer={this.state.currentQuestion.correct_answer}
-          nextQuestion={this.updateQuestion}
-          totalAnswers={this.updateAnswers}
-        />
-      </View>
+      <GameComponent
+        currentQuestion={this.state.currentQuestion.question}
+        incorrectAnswers={this.state.currentQuestion.incorrect_answers}
+        correctAnswer={this.state.currentQuestion.correct_answer}
+        nextQuestion={this.updateQuestion}
+        totalAnswers={this.updateAnswers}
+      />
     );
   }
 }

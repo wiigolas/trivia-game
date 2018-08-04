@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing the <AnswersComponentComponent> renders correctly 1`] = `
+<Component>
+  <Button
+    key="0"
+    onPress={[Function]}
+    title="answer"
+  />
+  <Button
+    key="1"
+    onPress={[Function]}
+    title="answer"
+  />
+  <Button
+    key="2"
+    onPress={[Function]}
+    title="answer"
+  />
+  <Button
+    key="3"
+    onPress={[Function]}
+    title="answer"
+  />
+</Component>
+`;

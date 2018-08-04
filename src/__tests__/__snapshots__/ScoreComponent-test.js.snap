@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing the <ScoreComponent> renders correctly 1`] = `
+<Component>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    id="score"
+  >
+    You had 5 correct answers
+  </Text>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    id="feedback"
+  >
+    Well done, keep on trying!
+  </Text>
+</Component>
+`;

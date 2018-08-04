@@ -38,10 +38,11 @@ export default class ScoreComponent extends Component<Props> {
   }
 
   render() {
+    const totalScore = `You had ${this.props.totalScore} correct answers`;
     return(
       <View>
-        <Text>You had {this.props.totalScore} correct answers</Text>
-        <Text>{this.scoreFeedback(this.props.totalScore)}</Text>
+        <Text id='score'>{totalScore}</Text>
+        <Text id='feedback'>{this.scoreFeedback(this.props.totalScore)}</Text>
       </View>
     )
   }
