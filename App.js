@@ -19,15 +19,16 @@ export default class App extends Component<Props> {
       correctAnswers: 0,
       incorrectAnswers: 0,
     };
-    this.fetchQuestion = this.fetchQuestion.bind(this);
+    this.fetchQuestions = this.fetchQuestions.bind(this);
     this.updateQuestion = this.updateQuestion.bind(this);
     this.restartGame = this.restartGame.bind(this);
     this.startPage = this.startPage.bind(this);
     this.updateAnswers = this.updateAnswers.bind(this);
   }
 
-  fetchQuestion = () => {
-    fetch(`https://opentdb.com/api.php?amount=${this.state.amount}`)
+  fetchQuestions = (category) => {
+    console.log(category);
+    fetch(`https://opentdb.com/api.php?amount=${this.state.amount}&category=${category}`)
       .then((response) => response.json()
       .then((json) => {
          console.log(response);
@@ -86,7 +87,7 @@ export default class App extends Component<Props> {
   render() {
     if (!this.state.triviaOn) {
       return (
-          <StartPageComponent fetchQuestion={this.fetchQuestion}/>
+          <StartPageComponent fetchQuestions={this.fetchQuestions}/>
       )
     }
     if(this.state.finished){

@@ -1,23 +1,33 @@
 import React, { Component } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 
-import GameMenuComponent from './GameMenuComponent';
-
 export default class StartPageComponent extends Component<Props> {
+
   constructor() {
     super();
     this.state = {
+      categories: [
+        '9', // 'General Knowledge'
+        '15', // 'Video Games'
+        '21', // 'Sport'
+        '27', // 'Animals'
 
-    };
-    this.selectCategory = this.selectCategory.bind(this);
-  }
-  selectCategory = (category) => {
-    this.props.fetchQuestions(category)
+      ],
+    }
   }
   render() {
     return(
       <View style={styles.container}>
-        <GameMenuComponent selectCategory={this.selectCategory}/>
+        {
+          this.state.categories.map((category, key) => {
+            return (
+              <Button
+                title={category}
+                key={key}
+                onPress={() => this.props.selectCategory(category) } />
+            );
+          })
+        }
       </View>
     )
   }

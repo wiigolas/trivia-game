@@ -39,10 +39,11 @@ export default class AnswersComponent extends Component<Props> {
           incorrectAnswers: this.state.answers.incorrectAnswers + 1,
         }
       });
-    }
+    };
+    this.props.totalAnswers(this.state.answers);
     this.props.nextQuestion();
-    this.props.totalAnswers(this.state.answers)
-  }
+
+  };
 
   shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
